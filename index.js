@@ -18,44 +18,66 @@ await client.connect();
 console.log('database connected sucessfully')
 const database=client.db('babyWalker');
 const servicesCollection=database.collection('products');
-// const orderCollection=database.collection('orders')
+const reviewsCollection=database.collection('reviews');
+const orderCollection=database.collection('orders');
 // Get Api 
-// app.get('/products',async (req,res)=>{
-//     const cursor=servicesCollection.find({});
-//     const services=await cursor.toArray();
-//     res.send(services);
-// })
+app.get('/products',async (req,res)=>{
+    const cursor=servicesCollection.find({});
+    const services=await cursor.toArray();
+    res.send(services);
+})
+ 
 
-// //Get single service
-// app.get('/services/:id',async(req,res)=>{
-//     const id=req.params.id;
-//     const query={_id:ObjectId(id)};
-
-//     const service=await servicesCollection.findOne(query)
-//     res.json(service);
-// })
+//Get single service
+app.get('/products/:id',async(req,res)=>{
+    const id=req.params.id;
+    const query={_id:ObjectId(id)};
+    const service=await servicesCollection.findOne(query);
+    res.json(service);
+})
 
 // post api 
 app.post('/products',async(req,res)=>{
-
 const service=req.body;
-//  console.log('hit the post',service)
 const result=await servicesCollection.insertOne(service)
-res.json(result)
+res.json(result);
 })
+// post reviews api 
+app.post('/reviews',async(req,res)=>{
+const service=req.body;
+const result=await reviewsCollection.insertOne(service)
+res.json(result);
+})
+
+// Get reviews Api 
+app.get('/reviews',async (req,res)=>{
+    const cursor=reviewsCollection.find({});
+    const services=await cursor.toArray();
+    res.send(services);
+})
+ 
+
  //delete api
-// app.delete('/services/:id',async(req,res)=>{
-//     const id=req.params.id;
-//     const query={_id:ObjectId(id)};
-//     const result=await servicesCollection.deleteOne(query);
-//     res.json(result);
-// })
-// // Add orders Api
-// app.post('/orders',async(req,res)=>{
-//     const order=req.body;
-//     const result=await orderCollection.insertOne(order);
-//     res.json(result)
-// })
+app.delete('/orders/:id',async(req,res)=>{
+    const id=req.params.id;
+    const query={_id:ObjectId(id)};
+    const result=await orderCollection.deleteOne(query);
+    res.json(result);
+})
+
+// Add orders Api
+app.post('/orders',async(req,res)=>{
+    const order=req.body;
+    const result=await orderCollection.insertOne(order);
+    res.json(result)
+})
+
+// Get Orders Api 
+app.get('/orders',async (req,res)=>{
+    const cursor=orderCollection.find({});
+    const services=await cursor.toArray();
+    res.send(services);
+})
 
  }
 finally{
