@@ -145,11 +145,12 @@ app.post('/orders',async(req,res)=>{
     res.json(result)
 })
 
-// Get Orders Api 
+// Get Orders Api by email
 app.get('/orders',async (req,res)=>{
-    const cursor=orderCollection.find({});
-    const services=await cursor.toArray();
-    res.send(services);
+    const email=req.query.email;
+    const cursor=orderCollection.find({email});
+    const order=await cursor.toArray();
+    res.send(order);
 })
 
  }
