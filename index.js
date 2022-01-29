@@ -138,6 +138,14 @@ app.delete('/orders/:id',async(req,res)=>{
     res.json(result);
 })
 
+ //single get orders api
+ app.get('/orders/:id',async(req,res)=>{
+    const id=req.params.id;
+    const query={_id:ObjectId(id)};
+    const result=await orderCollection.findOne(query);
+    res.json(result);
+})
+
 // Add orders Api
 app.post('/orders',async(req,res)=>{
     const order=req.body;
