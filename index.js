@@ -131,11 +131,19 @@ app.get('/reviews',async (req,res)=>{
 })
  
 
- //delete api
+ //delete orders api
 app.delete('/orders/:id',async(req,res)=>{
     const id=req.params.id;
     const query={_id:ObjectId(id)};
     const result=await orderCollection.deleteOne(query);
+    res.json(result);
+})
+
+//delete products api
+app.delete('/products/:id',async(req,res)=>{
+    const id=req.params.id;
+    const query={_id:ObjectId(id)};
+    const result=await servicesCollection.deleteOne(query);
     res.json(result);
 })
 
